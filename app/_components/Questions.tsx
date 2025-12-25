@@ -8,6 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from "./Redux/hooks";
 import { Button } from "@/components/ui/button";
 import { removeAllQusetions, removeQuestion } from "./Redux/QuestionsSlice";
+import { DialogDemo } from "./Dialog";
 function Questions() {
   const dispatch = useAppDispatch();
   const questions = useAppSelector((state) => state.Questions.questions);
@@ -30,14 +31,17 @@ function Questions() {
               <Accordion type="single" collapsible dir="rtl">
                 <AccordionItem value="item-1">
                   <AccordionTrigger>{qa.question}</AccordionTrigger>
-                  <AccordionContent className="flex justify-between items-center gap-2 ">
+                  <AccordionContent className="flex  flex-col  gap-2 ">
                     {qa.answer}
-                    <Button
+                    <div className="flex justify-between">
+                      <Button
                       className="cursor-pointer bg-red-200 hover:bg-red-400 transition"
                       onClick={() => dispatch(removeQuestion(qa.id))}
                     >
                       مسح السؤال
                     </Button>
+                    <DialogDemo data={qa} />
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
