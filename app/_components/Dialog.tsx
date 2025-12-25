@@ -18,7 +18,7 @@ import { useAppDispatch } from "./Redux/hooks";
 import { editQuestion } from "./Redux/QuestionsSlice";
 
 export function DialogDemo({ data }: { data: QuestionAnswer }) {
-  const [isopen,setIsOpen] =useState(false)
+  const [isopen, setIsOpen] = useState(true);
   const dispatch = useAppDispatch();
   const [QuValue, setQuSetValue] = useState<string>(data.question);
   const [AnswerValue, setAnswerValue] = useState<string>(data.answer);
@@ -33,47 +33,50 @@ export function DialogDemo({ data }: { data: QuestionAnswer }) {
       answer: AnswerValue,
     };
     dispatch(editQuestion(newValues));
-    toast.success("تم التعديل ")
+    toast.success("تم التعديل ");
+    setIsOpen(false)
   };
   return (
-    <Dialog >
+    <Dialog>
       <form>
         <DialogTrigger asChild>
           <Button>تعديل</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>تعديل السؤال والاجابه</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="name-1">تعديل السؤال</Label>
-              <Input
-                id="name-1"
-                name="name"
-                value={QuValue}
-                onChange={(e) => setQuSetValue(e.target.value)}
-              />
+        {isopen && (
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>تعديل السؤال والاجابه</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4">
+              <div className="grid gap-3">
+                <Label htmlFor="name-1">تعديل السؤال</Label>
+                <Input
+                  id="name-1"
+                  name="name"
+                  value={QuValue}
+                  onChange={(e) => setQuSetValue(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="username-1">تعديل الاجابه</Label>
+                <Input
+                  id="username-1"
+                  name="username"
+                  value={AnswerValue}
+                  onChange={(e) => setAnswerValue(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">تعديل الاجابه</Label>
-              <Input
-                id="username-1"
-                name="username"
-                value={AnswerValue}
-                onChange={(e) => setAnswerValue(e.target.value)}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">الغاء</Button>
-            </DialogClose>
-            <Button type="submit" onClick={handleEditQuestionAnswer}>
-              حفظ التغييرات
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">الغاء</Button>
+              </DialogClose>
+              <Button type="submit" onClick={handleEditQuestionAnswer}>
+                حفظ التغييرات
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        )}
       </form>
     </Dialog>
   );
